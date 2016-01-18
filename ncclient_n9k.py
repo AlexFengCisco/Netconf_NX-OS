@@ -1,4 +1,7 @@
 '''
+This ncclient demo code is adress the customer needs , 
+automated config nexus switch , add vlan and allow specified vlan on trunk port
+
 Created on Jan 15, 2016
 
 @author: AlexFeng
