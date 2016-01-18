@@ -1,0 +1,109 @@
+# Sample Netconf XML verified on the  following plat form with NX OS 7.0(3)I1(2)
+Software
+  BIOS: version 07.17
+  NXOS: version 7.0(3)I1(2)
+  BIOS compile time:  09/10/2014
+  NXOS image file is: bootflash:///n9000-dk9.7.0.3.I1.2.bin
+  NXOS compile time:  5/16/2015 12:00:00 [05/16/2015 19:07:58]
+
+
+Hardware
+  cisco Nexus9000 C9372PX chassis 
+  Intel(R) Core(TM) i3-3227U C with 16402540 kB of memory.
+
+
+
+#-----------------hello ----------------------------------------------
+<?xml version="1.0"?>
+<nc:hello xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <nc:capabilities>
+  <nc:capability>urn:ietf:params:xml:ns:netconf:base:1.0</nc:capability>
+  </nc:capabilities>
+</nc:hello>]]>]]>
+
+
+#------------------create vlan 13 14 demo ----------------------------
+<?xml version="1.0"?>
+<nf:rpc xmlns="http://www.cisco.com/nxos:1.0:vlan_mgr_cli"
+             xmlns:nf="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="2">
+  <nf:edit-config>
+    <nf:target>
+      <nf:running/>
+    </nf:target>
+    <nf:config>
+      <configure>
+        <__XML__MODE__exec_configure>
+          <vlan>
+            <vlan-id-create-delete>
+              <__XML__PARAM_value>13-14</__XML__PARAM_value>
+            </vlan-id-create-delete>
+          </vlan>
+        </__XML__MODE__exec_configure>
+      </configure>
+    </nf:config>
+  </nf:edit-config>
+</nf:rpc>
+]]>]]>
+
+#-------------------create vlan 2501--------------------------------
+<?xml version='1.0' encoding='UTF-8'?>
+<nc:rpc xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" xmlns:nxos="http://www.cisco.com/nxos:1.0" message-id="647530">
+  <nxos:exec-command>
+    <nxos:cmd>config t ; vlan 2501</nxos:cmd>
+    <nxos:cmd>end</nxos:cmd>
+  </nxos:exec-command>
+</nc:rpc>
+]]>]]>
+
+
+#------------------show mac address table --------------------------
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<nf:rpc message-id="11" xmlns="http://www.cisco.com/nxos:1.0:l2fm" xmlns:nf="urn:ietf:params:xml:ns:netconf:base:1.0"  xmlns:nxos="http://www.cisco.com/nxos:1.0">
+  <nf:get>
+    <nf:filter type="subtree">
+      <show>
+        <mac>
+          <address-table/>
+         </mac>
+      </show>
+    </nf:filter>
+  </nf:get>
+</nf:rpc>]]>]]>
+
+#-----------------show mac address table with XPATH filter-------------
+<?xml version="1.0"?>
+<nf:rpc xmlns="http://www.cisco.com/nxos:1.0:l2fm" xmlns:nf="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="17">
+<nf:get>
+  <nf:filter type="subtree">
+    <show xpath-filter=
+        "//ROW_mac_address/disp_mac_addr|//ROW_mac_address/disp_vlan">
+      <mac>
+        <address-table/>
+      </mac>
+    </show>
+  </nf:filter>
+</nf:get>
+</nf:rpc>]]>]]>
+
+#-------------NX OS exec command -------------------------------------
+<?xml version="1.0"?>
+<nf:rpc xmlns="http://www.cisco.com/nxos:1.0:if_manager" 
+            xmlns:nf="urn:ietf:params:xml:ns:netconf:base:1.0"
+            xmlns:nxos="http://www.cisco.com/nxos:1.0"
+            message-id="110">
+  <nxos:exec-command>
+    <nxos:cmd>
+      configure terminal ; interface ethernet 1/2 ; desc netconf    </nxos:cmd>
+  </nxos:exec-command>
+</nf:rpc>]]>]]>
+
+
+
+
+#----Close Session ---------------------------------------
+
+<?xml version="1.0"?> 
+<nc:rpc message-id="101" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" 
+xmlns="http://www.cisco.com/nxos:1.0"> 
+      <nc:close-session/> 
+</nc:rpc>]]>]]>
